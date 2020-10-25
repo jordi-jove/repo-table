@@ -6,8 +6,8 @@ import { Link, DataTableSkeleton, Pagination } from 'carbon-components-react';
 
 const REPO_QUERY = gql`
   query REPO_QUERY {
-    # Let's use carbon as our organization
-    organization(login: "carbon-design-system") {
+    # Let's use jordi-jove as our user
+    user(login: "jordi-jove") {
       # We'll grab all the repositories in one go. To load more resources
       # continuously, see the advanced topics.
       repositories(first: 75, orderBy: { field: UPDATED_AT, direction: DESC }) {
@@ -100,7 +100,7 @@ const RepoPage = () => {
       <div className="bx--row repo-page__r1">
         <div className="bx--col-lg-16">
           <Query query={REPO_QUERY}>
-            {({ loading, error, data: { organization } }) => {
+            {({ loading, error, data: { user } }) => {
               // Wait for the request to complete
               if (loading)
                 return (
@@ -115,7 +115,7 @@ const RepoPage = () => {
               if (error) return `Error! ${error.message}`;
 
               // If we're here, we've got our data!
-              const { repositories } = organization;
+              const { repositories } = user;
               setTotalItems(repositories.totalCount);
               const rows = getRowItems(repositories.nodes);
 
